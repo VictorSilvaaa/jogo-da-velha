@@ -112,7 +112,23 @@ def verifyWin(board, player):
       
 
   return board
-    
+
+def computerMove2(board):
+  for i in range(3):
+    for j in range(3):
+      if board[i][j] == '*':
+        bestMove = [i,j]
+        board[i][j] = 'x'
+        if verifyWin(board, 'x'):
+          board[i][j] = '*'
+          bestMove = [i,j]
+          return bestMove
+        else:
+          board[i][j] = '*'
+  return bestMove
+
+
+
 def computerMove(board, player):
     # MiniMax algorithm to find the best move
     bestValue = float('inf')
