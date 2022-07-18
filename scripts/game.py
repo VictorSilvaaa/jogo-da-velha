@@ -3,6 +3,7 @@ from scripts.utils import *
 time = pygame.time.Clock()
 from scripts.button import Button
 
+
 def game(screen, gameMode, level):
     pygame.mouse.set_pos(150, 175)
 

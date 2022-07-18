@@ -1,4 +1,5 @@
 import pygame
+import copy
 def createBoard():
     board = [
         ['*', '*', '*'],
@@ -31,8 +32,10 @@ def isFullBoard(board):
 rect_img = pygame.image.load('img\Rectangle.png')
 rect_img_x = pygame.image.load('img\Rectanglex.png')
 rect_img_o = pygame.image.load('img\Rectangleo.png')
+
 def drawBoard(screen, board, positions, player,gameMode):
-  rect_img = pygame.image.load('img\Rectangle.png')
+  board = copy.deepcopy(board)
+  positions = copy.deepcopy(positions)
   for i in range(3):
     for j in range(3):
       x, y = pygame.mouse.get_pos()
@@ -52,6 +55,8 @@ def drawBoard(screen, board, positions, player,gameMode):
         screen.blit(rect_img_o, positions[i][j])
 
 def checkInput(board, positions, pos, player,index=0):
+  board = copy.deepcopy(board)
+  positions = copy.deepcopy(positions)
   flag =  False
   if index != 0:
     if board[index[0]][index[1]] == '*':
@@ -70,6 +75,7 @@ def checkInput(board, positions, pos, player,index=0):
   return flag, board
 
 def verifyWin(board, player):
+  board = copy.deepcopy(board)
   contRow = 0
   contColumn = 0
   contDiagonal = 0
@@ -114,22 +120,21 @@ def verifyWin(board, player):
   return board
 
 def computerMove2(board):
+  board = copy.deepcopy(board)
   for i in range(3):
     for j in range(3):
       if board[i][j] == '*':
         bestMove = [i,j]
         board[i][j] = 'x'
         if verifyWin(board, 'x'):
-          board[i][j] = '*'
           bestMove = [i,j]
           return bestMove
         else:
           board[i][j] = '*'
   return bestMove
 
-
-
 def computerMove(board, player):
+    board = copy.deepcopy(board)
     # MiniMax algorithm to find the best move
     bestValue = float('inf')
     bestMove = [0,0]
@@ -145,6 +150,7 @@ def computerMove(board, player):
     return bestMove
 
 def minimax(board, cur_player):
+    board = copy.deepcopy(board)
     # Calculate the board score
     if verifyWin(board,'x'):
         return 1
