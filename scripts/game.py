@@ -3,14 +3,16 @@ from scripts.utils import *
 from scripts.button import Button
 
 time = pygame.time.Clock()
-music_background = pygame.mixer.Sound('sounds\\fundo.wav')
+music_background = pygame.mixer.Sound('sounds/fundo.wav')
 music_channel= pygame.mixer.Channel(0)
 
 #variables button/img
-pause_img = pygame.image.load('img\pause.png')
-continue_img = pygame.image.load('img\play.png')
-pause_button = Button(620, 20, pause_img,1)
-continue_button = Button(650, 20, continue_img,1)
+pause_img = pygame.image.load('img/pause.png')
+break_img = pygame.image.load('img/break.png')
+continue_img = pygame.image.load('img/play.png')
+pause_button = Button(610, 20, pause_img,1)
+break_button = Button(650, 20, break_img,1)
+continue_button = Button(610, 20, continue_img,1)
 
 def game(screen, gameMode, level):
     
@@ -29,7 +31,7 @@ def game(screen, gameMode, level):
     running = True
     while running:
         time.tick(30)
-        screen.fill((0,0,0))
+        screen.fill((52,78,91))
         if state == 'run':
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -37,6 +39,9 @@ def game(screen, gameMode, level):
                     running = False
                 if pause_button.clicked():
                     state = 'pause'
+                if break_button.clicked():
+                    music_channel.stop()
+                    running = False
 
                 result = False  
                 if gameMode == 1 or player == 'x':
@@ -46,10 +51,7 @@ def game(screen, gameMode, level):
                 else:
                     if level == 'easy':
                         moviment = computerMoveEasy(board)
-                    else:
-                        moviment = computerMove(board, player)
-                    result, newBoard = checkInput(board, boardPositionList, pos, player, moviment)
-                
+                        result, newBoard = checkInput(board, boardPositionList, pos, player, moviment)                     
                 if result:
                     board = newBoard
                     if verifyWin(board, player):
@@ -64,16 +66,20 @@ def game(screen, gameMode, level):
 
             drawBoard(screen, board, boardPositionList, player, gameMode)
             pause_button.draw(screen)
+            break_button.draw(screen)
             text_formated = fonte.render(f'X= {scoreX} | O= {scoreO}',True,(255,255,255))
             screen.blit(text_formated,(0,0))
         if state =='pause':
-            screen.fill((0,0,0))
             continue_button.draw(screen)
+            break_button.draw(screen)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     music_channel.stop()
                     running = False
                 if continue_button.clicked():
                     state = 'run'
+                if break_button.clicked():
+                    music_channel.stop()
+                    running = False
            
         pygame.display.update()

@@ -17,10 +17,8 @@ mode2_button = Button(236, 227, mode2_img,1)
 
 #mode 2 buttons/imgs
 easy_img = pygame.image.load('img\EASY.png')
-hard_img = pygame.image.load('img\hard.png')
 back_img = pygame.image.load('img\\back.png')
 easy_button = Button(235, 120, easy_img,1)
-hard_button = Button(235, 190, hard_img,1)
 back_button = Button(235, 260, back_img,1)
 
 pygame.mixer.init()
@@ -52,7 +50,6 @@ while flag:
   else:
     screen.fill((0,0,0))
     easy_button.draw(screen)
-    hard_button.draw(screen)
     back_button.draw(screen)
     for event in pygame.event.get():
       if event.type == pygame.QUIT:
@@ -62,10 +59,7 @@ while flag:
         pygame.mixer.music.stop()
         game(screen, 2, 'easy')
         state ='home'
-      if hard_button.clicked():
-        pygame.mixer.music.stop()
-        game(screen, 2, 'hard')
-        state ='home'
+          
       if back_button.clicked():
         state ='home'
 
