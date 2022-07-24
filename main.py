@@ -4,10 +4,11 @@ from scripts.game import *
 from time import sleep
 
 pygame.init()
-#variaveis da janela
+#variables window
 screenSize = screenWidth, screenHeight = 720, 480
 screen = pygame.display.set_mode(screenSize)
 time = pygame.time.Clock()
+textHome = pygame.image.load('img\\textJogodaVelha.png')
 
 #mode 1 -> two players || mode 2 -> player vs computer
 mode1_img = pygame.image.load('img/2jogadores.png')
@@ -33,7 +34,8 @@ while flag:
   if state == 'home':
     if not pygame.mixer.music.get_busy():
       pygame.mixer.music.play(-1)
-    screen.fill((0,0,0))
+    screen.fill((52,78,91))
+    screen.blit(textHome, (266,25))
     #button options mode game
     mode1_button.draw(screen)
     mode2_button.draw(screen)
@@ -48,18 +50,18 @@ while flag:
         state = 'level'
         sleep(0.25)
   else:
-    screen.fill((0,0,0))
+    screen.fill((52,78,91))
     easy_button.draw(screen)
     back_button.draw(screen)
     for event in pygame.event.get():
       if event.type == pygame.QUIT:
+        flag = False
         sys.exit()
         pygame.quit()
       if easy_button.clicked():
         pygame.mixer.music.stop()
         game(screen, 2, 'easy')
-        state ='home'
-          
+        state ='home'       
       if back_button.clicked():
         state ='home'
 

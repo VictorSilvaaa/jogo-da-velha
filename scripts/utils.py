@@ -104,6 +104,7 @@ def verifyWin(board, player):
       contDiagonal+=1
       if contDiagonal == 3:
         return True
+    #diagonal inversa
     if board[i][-i-1] == player:
       contDiagonalInvers+=1
       if contDiagonalInvers == 3:
